@@ -6,24 +6,24 @@
 #         self.right = right
 class Solution:
     def __init__(self):
-        self.res=[]
+        self.res = []
 
-    def binaryTreePaths(self, root: Optional[TreeNode]) -> List[str]:
-        arr=''
-        if not root:
-            return []
-        self.checkSm(root, arr)
-        return self.res
-    
-    def checkSm(self, node, arr):
-        newarr=arr+str(node.val)
+    def helper(self, node, path):
+        npath = path + str(node.val)
         if not node.left and not node.right:
-            self.res.append(newarr)
+            self.res.append(npath)
             return
         else:
-            newarr=newarr+'->'
+            npath = npath + '->'
             if node.left:
-                self.checkSm(node.left, newarr)
+                self.helper(node.left, npath)
             if node.right:
-                self.checkSm(node.right, newarr)
-        return
+                self.helper(node.right, npath)
+        return 
+        
+    def binaryTreePaths(self, root: Optional[TreeNode]) -> List[str]:
+        path = ''
+        if not root:
+            return []
+        self.helper(root,path)
+        return self.res
