@@ -7,9 +7,9 @@ class Solution:
         itinerary = []
         def dfs(airport):
             while graph[airport]:
-                dfs(graph[airport].pop())
+                p = graph[airport].pop()
+                dfs(p)
             itinerary.append(airport)
         
         dfs("JFK")
-        
         return itinerary[::-1]
