@@ -22,4 +22,3 @@ class Solution:
                 high = partitionX - 1
             else:
                 low = partitionX + 1
-        raise ValueError("Input arrays are not sorted.")
