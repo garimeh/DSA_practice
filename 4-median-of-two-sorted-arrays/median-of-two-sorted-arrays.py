@@ -1,24 +1,29 @@
 class Solution:
     def findMedianSortedArrays(self, nums1: List[int], nums2: List[int]) -> float:
-        if len(nums1) > len(nums2):
-            nums1, nums2 = nums2, nums1
-        x, y = len(nums1), len(nums2)
-        low, high = 0, x
-        while low <= high:
-            partitionX = (low + high) // 2
-            partitionY = (x + y + 1) // 2 - partitionX
-            maxLeftX = float('-inf') if partitionX == 0 else nums1[partitionX - 1]
-            minRightX = float('inf') if partitionX == x else nums1[partitionX]
+        A, B = nums1, nums2
+        total = len(nums1) + len(nums2)
+        half = total // 2
 
-            maxLeftY = float('-inf') if partitionY == 0 else nums2[partitionY - 1]
-            minRightY = float('inf') if partitionY == y else nums2[partitionY]
-            
-            if maxLeftX <= minRightY and maxLeftY <= minRightX:
-                if (x + y) % 2 == 0:
-                    return (max(maxLeftX, maxLeftY) + min(minRightX, minRightY)) / 2
-                else:
-                    return max(maxLeftX, maxLeftY)
-            elif maxLeftX > minRightY:
-                high = partitionX - 1
+        if len(B) < len(A):
+            A, B = B, A
+
+        l, r = 0, len(A) - 1
+        while True:
+            i = (l + r) // 2  # A
+            j = half - i - 2  # B
+
+            Aleft = A[i] if i >= 0 else float("-infinity")
+            Aright = A[i + 1] if (i + 1) < len(A) else float("infinity")
+            Bleft = B[j] if j >= 0 else float("-infinity")
+            Bright = B[j + 1] if (j + 1) < len(B) else float("infinity")
+
+            if Aleft <= Bright and Bleft <= Aright:
+                # odd
+                if total % 2:
+                    return min(Aright, Bright)
+                # even
+                return (max(Aleft, Bleft) + min(Aright, Bright)) / 2
+            elif Aleft > Bright:
+                r = i - 1
             else:
-                low = partitionX + 1
+                l = i + 1
