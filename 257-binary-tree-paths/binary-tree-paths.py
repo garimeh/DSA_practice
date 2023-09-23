@@ -7,23 +7,21 @@
 class Solution:
     def __init__(self):
         self.res = []
-
-    def helper(self, node, path):
-        npath = path + str(node.val)
-        if not node.left and not node.right:
-            self.res.append(npath)
-            return
-        else:
-            npath = npath + '->'
-            if node.left:
-                self.helper(node.left, npath)
-            if node.right:
-                self.helper(node.right, npath)
-        return 
-        
     def binaryTreePaths(self, root: Optional[TreeNode]) -> List[str]:
+        def helper(node, path):
+            npath = path + str(node.val)
+            if not node.left and not node.right:
+                self.res.append(npath)
+                return
+            else:
+                npath = npath + '->'
+                if node.left:
+                    helper(node.left, npath)
+                if node.right:
+                    helper(node.right, npath)
+            return
         path = ''
         if not root:
             return []
-        self.helper(root,path)
+        helper(root, path)
         return self.res
