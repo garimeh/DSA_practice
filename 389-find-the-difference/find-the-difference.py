@@ -1,14 +1,8 @@
 class Solution:
     def findTheDifference(self, s: str, t: str) -> str:
-        s_count = defaultdict(int)
-        t_count = defaultdict(int)
-    
-        for char in s:
-            s_count[char] += 1
-    
-        for char in t:
-            t_count[char] += 1
-        
-        for key, value in t_count.items():
-            if s_count[key] != value:
-                return key
+        c = 0
+        for i in s:
+            c = c^ord(i)
+        for j in t:
+            c = c^ord(j)
+        return chr(c)
