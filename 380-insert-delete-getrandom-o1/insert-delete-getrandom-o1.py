@@ -1,25 +1,30 @@
 class RandomizedSet:
-
     def __init__(self):
-        self.randomset = set()
+        self.mp = {}
         self.arr = []
+
     def insert(self, val: int) -> bool:
-        if val in self.randomset:
-            return False
-        self.randomset.add(val)
-        self.arr.append(val)
-        return True
+        if val not in self.mp:  # Changed the condition
+            self.mp[val] = len(self.arr)
+            self.arr.append(val)
+            return True  # Return True if the item was inserted
+        return False
 
     def remove(self, val: int) -> bool:
-        if val in self.randomset:
-            self.randomset.remove(val)
-            self.arr.remove(val)
-            return True
+        if val in self.mp:
+            ind = self.mp[val]
+            last = self.arr[-1]
+            # Update the map before modifying the array
+            self.mp[last] = ind
+            # Swap
+            self.arr[ind] = last
+            self.arr.pop()
+            del self.mp[val]
+            return True  # Return True if the item was removed
         return False
 
     def getRandom(self) -> int:
-        ran = random.randint(0, len(self.randomset)-1)
-        return self.arr[ran]
+        return random.choice(self.arr)
 
 # Your RandomizedSet object will be instantiated and called as such:
 # obj = RandomizedSet()
