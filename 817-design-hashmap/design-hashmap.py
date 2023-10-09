@@ -12,9 +12,7 @@ class MyHashMap:
             self.values[self.keys.index(key)] = value
 
     def get(self, key: int) -> int:
-        if key not in self.keys:
-            return -1
-        return self.values[self.keys.index(key)]
+        return self.values[self.keys.index(key)] if key in self.keys else -1       
 
     def remove(self, key: int) -> None:
         if key in self.keys:
