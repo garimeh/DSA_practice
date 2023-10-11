@@ -1,21 +1,16 @@
 class Solution:
     def decodeAtIndex(self, s: str, k: int) -> str:
-        decoded_length = 0  
+        size = 0  
         for char in s:
             if char.isdigit():
-
-                decoded_length *= int(char)
+                size *= int(char) 
             else:
-                decoded_length += 1
-
-        for i in range(len(s) - 1, -1, -1):
-            current_char = s[i]
-
-            if current_char.isdigit():
-                decoded_length //= int(current_char)
-                k %= decoded_length
+                size += 1  
+        for char in reversed(s):
+            k %= size 
+            if k == 0 and char.isalpha():
+                return char  
+            if char.isdigit():
+                size //= int(char)  
             else:
-                if k == 0 or decoded_length == k:
-                    return current_char  
-                decoded_length -= 1
-        return ""  
+                size -= 1  
