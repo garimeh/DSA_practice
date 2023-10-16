@@ -1,13 +1,9 @@
 class Solution:
     def getRow(self, r: int) -> List[int]:
-        def ncr(n,r):
-            res = 1
-            for i in range(r):
-                res = res*(n-i)
-                res = res/(i+1)
-            return int(res)
-
-        ans = []
-        for i in range(r+1):
-            ans.append(ncr(r,i))
-        return ans
+        res = [1]
+        prev = 1
+        for k in range(1, r + 1):
+            next_val = prev * (r - k + 1) // k
+            res.append(next_val)
+            prev = next_val
+        return res
