@@ -5,7 +5,7 @@ class Solution:
         a, e, i, o, u = 0,1,2,3,4
         mod = 10**9 + 7
 
-        for j in range(2,n+1):
+        for j in range(1,n):
             cur = [0,0,0,0,0]
             cur[a] = (prev[e] + prev[i] + prev[u])%mod
             cur[e] = (prev[a] + prev[i])%mod
