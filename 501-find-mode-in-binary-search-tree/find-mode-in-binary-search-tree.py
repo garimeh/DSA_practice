@@ -6,16 +6,15 @@
 #         self.right = right
 class Solution:
     def findMode(self, root: Optional[TreeNode]) -> List[int]:
-        @cache
-        def dfs(node):
-            if not node:
-                return 
-            freq[node.val] = freq.get(node.val, 0) + 1
-            l = dfs(node.left)
-            r = dfs(node.right)
-
+        stack = []
+        stack.append(root)
         freq = {}
-        dfs(root)
+        while stack:
+            node = stack.pop()
+            freq[node.val] = freq.get(node.val, 0) + 1
+            if node.left: stack.append(node.left)
+            if node.right: stack.append(node.right)
+            
         m = max(freq.values())
         ans = []
         for k,v in freq.items():
