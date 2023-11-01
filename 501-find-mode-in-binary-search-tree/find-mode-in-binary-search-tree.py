@@ -6,6 +6,7 @@
 #         self.right = right
 class Solution:
     def findMode(self, root: Optional[TreeNode]) -> List[int]:
+        @cache
         def dfs(node):
             if not node:
                 return 
