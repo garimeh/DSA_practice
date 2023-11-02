@@ -1,4 +1,3 @@
-from collections import deque
 # Definition for a binary tree node.
 # class TreeNode:
 #     def __init__(self, val=0, left=None, right=None):
@@ -7,18 +6,23 @@ from collections import deque
 #         self.right = right
 class Solution:
     def findMode(self, root: Optional[TreeNode]) -> List[int]:
-        q = deque()
-        q.append(root)
-        freq = {}
-        while q:
-            node = q.popleft()
-            freq[node.val] = freq.get(node.val, 0) + 1
-            if node.left: q.append(node.left)
-            if node.right: q.append(node.right)
+        def dfs(node):
+            nonlocal prevnum, curstreak, maxstreak, ans 
+            if not node:
+                return 
+            dfs(node.left)
+            if node.val == prevnum:
+                curstreak += 1
+            else:
+                prevnum = node.val
+                curstreak = 1
+            if maxstreak < curstreak:
+                ans = []
+                maxstreak = curstreak
+            if curstreak == maxstreak:
+                ans.append(node.val)
 
-        m = max(freq.values())
-        ans = []
-        for k,v in freq.items():
-            if v == m:
-                ans.append(k)
+            dfs(node.right)
+        ans, prevnum, maxstreak, curstreak =[], -1, 0 , 0
+        dfs(root)
         return ans
