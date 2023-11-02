@@ -6,6 +6,7 @@
 #         self.right = right
 class Solution:
     def averageOfSubtree(self, root: Optional[TreeNode]) -> int:
+        @cache
         def dfs(node):
             nonlocal ans
             if not node:
