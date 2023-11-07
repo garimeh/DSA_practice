@@ -7,10 +7,10 @@ class Solution:
         for i in range(n):
             time[i] = dist[i]/speed[i]
         
-        time.sort()
+        heapq.heapify(time)
 
-        for i in range(n):
-            if time[i] <= i:
+        while time:
+            if heapq.heappop(time) <= ans:
                 break
             ans += 1
         return ans
