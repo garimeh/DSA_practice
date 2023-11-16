@@ -5,10 +5,10 @@ class Solution:
             ing.add(int(num, 2))
         
         n = len(nums)
+        ans = 0
 
-        for num in range(n+1):
-            if num not in ing:
-                ans = bin(num)[2:]
-                return "0"*(n-len(ans)) + ans
-
-        return ""
+        while ans in ing:
+            ans = random.randrange(0,2**n)
+        
+        s = bin(ans)[2:]
+        return "0"*(n-len(s)) + s
