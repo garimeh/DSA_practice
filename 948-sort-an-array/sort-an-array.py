@@ -21,7 +21,7 @@ class Solution:
 
             for i in range(low, high+1):
                 nums[i] = temp[i - low]
-        
+                
         def mergesort(nums, low, high):
             if low >= high: return
             mid = (low+high)//2
