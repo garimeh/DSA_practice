@@ -11,11 +11,11 @@ class Solution:
         dummy.next = head
         while cur:
             if cur.val == val:
-                prev.next = cur.next if cur.next else None
+                prev.next = cur.next 
                 cur = cur.next 
                 continue
                 
             prev = cur
             cur = cur.next
-            
+
         return dummy.next
