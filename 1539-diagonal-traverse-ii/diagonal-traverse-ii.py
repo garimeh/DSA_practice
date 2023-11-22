@@ -1,17 +1,14 @@
-from collections import defaultdict
 class Solution:
     def findDiagonalOrder(self, nums: List[List[int]]) -> List[int]:
-        groups = defaultdict(list)
-        for row in range(len(nums) - 1, -1, -1):
-            for col in range(len(nums[row])):
-                diag = row + col
-                groups[diag].append(nums[row][col])
-
+        q = deque([(0,0)])
         ans = []
-        cur = 0
+        while q:
+            r, c = q.popleft()
+            ans.append(nums[r][c])
 
-        while cur in groups:
-            ans.extend(groups[cur])
-            cur += 1
+            if c == 0 and r+1<len(nums):
+                q.append((r+1, c))
 
+            if c+1 <len(nums[r]):
+                q.append((r, c+1))
         return ans
