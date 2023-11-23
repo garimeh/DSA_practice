@@ -1,20 +1,27 @@
 class Solution:
     def checkArithmeticSubarrays(self, nums: List[int], l: List[int], r: List[int]) -> List[bool]:
+        def check(arr):
+            min_element = min(arr)
+            max_element = max(arr)
+
+            if (max_element - min_element) % (len(arr) - 1) != 0:
+                return False
+
+            diff = (max_element - min_element) / (len(arr) - 1)
+            
+            arr_set = set(arr)
+            curr = min_element + diff
+            while curr < max_element:
+                if curr not in arr_set:
+                    return False
+                
+                curr += diff
+            
+            return True
+
         ans = []
         for i in range(len(l)):
-            left, right = l[i], r[i]
-            subarray = sorted(nums[left:right+1])
-
-            if len(subarray) < 2:
-                ans.append(False)
-                continue
-
-            cd = subarray[1] - subarray[0]
-            arithmetic = True
-            for j in range(1, len(subarray)):
-                if subarray[j] - subarray[j - 1] != cd:
-                    arithmetic = False
-                    break
-            ans.append(arithmetic)
-
+            arr = nums[l[i] : r[i] + 1]
+            ans.append(check(arr))
+        
         return ans
