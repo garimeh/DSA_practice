@@ -1,11 +1,9 @@
 class Solution:
     def maxCoins(self, piles: List[int]) -> int:
         piles.sort()
-        queue = deque(piles)
         ans = 0
-        while queue:
-            queue.pop() # alice
-            ans += queue.pop() # us
-            queue.popleft() # bob
-
+        
+        for i in range(len(piles) // 3, len(piles), 2):
+            ans += piles[i]
+        
         return ans
