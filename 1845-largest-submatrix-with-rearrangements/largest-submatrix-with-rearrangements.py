@@ -3,14 +3,18 @@ class Solution:
         m = len(mat)
         n = len(mat[0])
         ans = 0
+        prevrow = [0]*n
         for row in range(m):
+            currow = mat[row]
             for col in range(n):
-                if mat[row][col] != 0 and row > 0:
-                    mat[row][col] += mat[row-1][col]
+                if currow[col] != 0:
+                    currow[col] += prevrow[col]
 
-            currow = sorted(mat[row], reverse=True)
+            srow = sorted(mat[row], reverse=True)
 
             for i in range(n):
-                ans = max(ans, currow[i]*(i+1))
+                ans = max(ans, srow[i]*(i+1))
+                
+            prevrow = currow
 
         return ans
