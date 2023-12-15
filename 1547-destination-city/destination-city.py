@@ -1,11 +1,10 @@
 class Solution:
     def destCity(self, paths: List[List[str]]) -> str:
-        adjacency_list = defaultdict(list)
-        for a, b in paths:
-            adjacency_list[a].append(b)
-            if not adjacency_list[b]:
-                adjacency_list[b] = []
+        outgoing = set()
+        for i in range(len(paths)):
+            outgoing.add(paths[i][0])
 
-        for city, dest in adjacency_list.items():
-            if len(dest) == 0:
-                return city
+        for a, b in paths:
+            if b not in outgoing:
+                return b
+        return ""
