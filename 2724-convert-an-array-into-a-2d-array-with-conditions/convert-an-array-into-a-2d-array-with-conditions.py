@@ -1,12 +1,11 @@
 class Solution:
     def findMatrix(self, nums: List[int]) -> List[List[int]]:
-        freq = Counter(nums)
+        freq = [0]*(len(nums)+1)
         ans = []
-        while any(freq.values()):
-            cur = []
-            for k in freq.keys():
-                if freq[k] > 0:
-                    cur.append(k)
-                    freq[k] -= 1
-            ans.append(cur)
+        for n in nums:
+            if freq[n] >= len(ans):
+                ans.append([])
+            if ans:
+                ans[freq[n]].append(n)
+            freq[n] += 1
         return ans
