@@ -5,7 +5,6 @@ class Solution:
         for n in nums:
             if freq[n] >= len(ans):
                 ans.append([])
-            if ans:
-                ans[freq[n]].append(n)
+            ans[freq[n]].append(n)
             freq[n] += 1
         return ans
