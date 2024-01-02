@@ -1,18 +1,21 @@
 class Solution:
     def numRollsToTarget(self, n: int, k: int, target: int) -> int:
         mod = 10**9 + 7
+        dp = [[-1 for _ in range(target + 1)] for _ in range(n + 1)]
 
-        prev = [0]*(target + 1)
-        cur = [0]*(target + 1)
+        def help(ind, rem):
+            if ind == n:
+                return 1 if rem == 0 else 0
+            if rem < 0:
+                return 0
+            if dp[ind][rem] != -1:
+                return dp[ind][rem]
+            
+            ans = 0
+            for i in range(1, k + 1): 
+                ans = (ans + help(ind + 1, rem - i)) % mod
 
-        prev[0] = 1
+            dp[ind][rem] = ans
+            return dp[ind][rem]
 
-        for i in range(1, n + 1):
-            for j in range(1, target + 1):
-                ans = 0
-                for x in range(1, k + 1):
-                    if j - x >= 0:
-                        ans += prev[j - x] % mod
-                cur[j] = ans
-            prev = cur[:]
-        return int(prev[target]%mod)
+        return help(0, target)
