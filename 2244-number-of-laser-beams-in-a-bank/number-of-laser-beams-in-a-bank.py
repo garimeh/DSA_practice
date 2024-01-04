@@ -5,8 +5,8 @@ class Solution:
             cnt = 0
             for c in s:
                 if c == '1':
-                    cnt += 1
+                    cnt+= 1
             if cnt != 0:
-                ans += (prev*cnt)
+                ans += prev*cnt
                 prev = cnt
         return ans
