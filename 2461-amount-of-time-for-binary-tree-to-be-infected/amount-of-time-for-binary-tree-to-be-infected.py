@@ -5,31 +5,24 @@
 #         self.left = left
 #         self.right = right
 class Solution:
+    def __init__(self):
+        self.maxd = 0
     def amountOfTime(self, root: Optional[TreeNode], start: int) -> int:
-        adj = defaultdict(set)
-        stack = [root]
-        while stack:
-            cur = stack.pop(0)
-            if cur.left: 
-                stack.append(cur.left)
-                adj[cur.val].add(cur.left.val)
-                adj[cur.left.val].add(cur.val)
-            if cur.right:
-                stack.append(cur.right)
-                adj[cur.val].add(cur.right.val)
-                adj[cur.right.val].add(cur.val)
-        
-        vis = {start}
-        q = deque([start])
-        ans = 0
-        while q:
-            lev = len(q)
-            while lev > 0:
-                cur = q.popleft()
-                for num in adj[cur]:
-                    if num not in vis:
-                        vis.add(num)
-                        q.append(num)
-                lev -= 1
-            ans += 1
-        return ans - 1
+        def dfs(node):
+            d = 0
+            if not node:
+                return d
+            r = dfs(node.right)
+            l = dfs(node.left)
+            if node.val == start:
+                self.maxd = max(l, r)
+                d = -1
+            elif l>=0 and r >=0:
+                d = max(l,r) + 1
+            else:
+                dist = abs(l) + abs(r)
+                self.maxd = max(self.maxd, dist)
+                d = min(l,r) - 1
+            return d
+        dfs(root)
+        return self.maxd
