@@ -1,17 +1,23 @@
 class Solution:
     def findWinners(self, matches: List[List[int]]) -> List[List[int]]:
-        losses = [0] * 100001
-
+        zero_loss = set()
+        one_loss = set()
+        more_losses = set()
+        
         for winner, loser in matches:
-            if losses[winner] == 0:
-                losses[winner] = -1
-
-            if losses[loser] == -1:
-                losses[loser] = 1
+            # Add winner
+            if (winner not in one_loss) and (winner not in more_losses):
+                zero_loss.add(winner)
+            # Add or move loser.
+            if loser in zero_loss:
+                zero_loss.remove(loser)
+                one_loss.add(loser)
+            elif loser in one_loss:
+                one_loss.remove(loser)
+                more_losses.add(loser)
+            elif loser in more_losses:
+                continue
             else:
-                losses[loser] += 1
-
-        zero_loss = [i for i in range(1, 100001) if losses[i] == -1]
-        one_loss = [i for i in range(1, 100001) if losses[i] == 1]
-
-        return [zero_loss, one_loss]        
+                one_loss.add(loser)          
+            
+        return [sorted(list(zero_loss)), sorted(list(one_loss))]
