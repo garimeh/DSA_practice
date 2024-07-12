@@ -1,5 +1,18 @@
 class Solution:
     def maximumGain(self, s: str, x: int, y: int) -> int:
+        s = list(s)
+        def helper(inp, tar, ppr):
+            tp, write = 0, 0
+            for read in range(len(inp)):
+                inp[write] = inp[read]
+                write += 1
+
+                if write > 1 and inp[write - 2] == tar[0] and inp[write - 1] == tar[1]:
+                    write -= 2
+                    tp += ppr
+            del inp[write:]
+            return tp
+
         res = 0
         if x > y:
             top = "ab"
@@ -11,19 +24,6 @@ class Solution:
             tscore = y
             bot = "ab"
             bscore = x
-        stack = []
-        for char in s:
-            if char == top[1] and stack and stack[-1] == top[0]:
-                res += tscore
-                stack.pop()
-            else:
-                stack.append(char)
-        
-        nstack = []
-        for char in stack:
-            if char == bot[1] and nstack and nstack[-1] == bot[0]:
-                res += bscore
-                nstack.pop()
-            else:
-                nstack.append(char)
+        res += helper(s, top, tscore)
+        res += helper(s, bot, bscore)
         return res
