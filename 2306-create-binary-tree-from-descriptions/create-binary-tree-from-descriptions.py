@@ -6,24 +6,20 @@
 #         self.right = right
 class Solution:
     def createBinaryTree(self, descriptions: List[List[int]]) -> Optional[TreeNode]:
-        def dfs(node):
-            no = TreeNode(node)
-            for child, dirx in graph[node]:
-                if dirx:
-                    no.left = dfs(child)
-                else:
-                    no.right = dfs(child)
-            return no
-
-        alls = set()
-        chis = set()
-        graph = defaultdict(list)
-        for node in descriptions:
-            par, chi, l = node
-            alls.add(par)
-            alls.add(chi)
-            chis.add(chi)
-            graph[par].append((chi, l))
-        
-        root = (alls - chis).pop()
-        return dfs(root)
+        tree = {}
+        childs = set()
+        for par, chi, l in descriptions:
+            childs.add(chi)
+            if par not in tree:
+                tree[par] = TreeNode(par)
+            if chi not in tree:
+                tree[chi] = TreeNode(chi)
+            if l:
+                tree[par].left = tree[chi]
+            else:
+                tree[par].right = tree[chi]
+        root = None
+        for a in tree.values():
+            if a.val not in childs:
+                return a
+        return None
