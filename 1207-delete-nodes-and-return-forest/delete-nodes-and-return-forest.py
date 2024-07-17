@@ -7,6 +7,7 @@
 class Solution:
     def delNodes(self, root: Optional[TreeNode], to_delete: List[int]) -> List[TreeNode]:
         fors = []
+        dels = set(to_delete)
         def dfs(node):
             if node.left:
                 node.left = dfs(node.left)
