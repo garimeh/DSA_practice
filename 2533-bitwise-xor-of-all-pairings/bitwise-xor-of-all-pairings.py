@@ -1,13 +1,13 @@
 class Solution:
     def xorAllNums(self, nums1: List[int], nums2: List[int]) -> int:
-        ans = 0
         n, m = len(nums1), len(nums2)
-        freq = {}
-        for num in nums1:
-            if m%2:
-                ans ^= num
-        for num in nums2:
-            if n%2:
-                ans ^= num
+        xor1, xor2 = 0,0
 
-        return ans
+        if n%2:
+            for num in nums2:
+                xor2^=num
+
+        if m%2:
+            for num in nums1:
+                xor1^=num
+        return xor2^xor1
